@@ -1,0 +1,51 @@
+.skills-section {
+  padding-top: 6rem;
+}
+
+.skills-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(13, 13, 15, 0.85); /* Matches var(--bg-color) with slight transparency */
+  backdrop-filter: blur(8px); /* Blurs any waterfall lines behind the card to prevent visual clutter */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-5px);
+  background: rgba(13, 13, 15, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.skill-icon {
+  font-size: 3rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+  color: var(--hover-color);
+  filter: drop-shadow(0 0 8px var(--hover-color));
+}
+
+.skill-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}

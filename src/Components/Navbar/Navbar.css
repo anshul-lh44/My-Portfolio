@@ -1,0 +1,130 @@
+.navbar {
+  position: fixed;
+  bottom: 2rem; /* placed at the bottom */
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto; /* width to fit content */
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1.5rem;
+  background: var(--nav-bg);
+  backdrop-filter: blur(15px);
+  border-radius: 50px; /* pill shape */
+  border: 1px solid rgba(230, 0, 0, 0.3); /* Subtle red racing border */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.navbar.scrolled {
+  /* You can change styling on scroll if needed, but the base is already visible */
+  background: rgba(11, 15, 25, 0.95);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem; /* smaller logo to fit pill */
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-right: 2rem;
+  display: none; /* Hide logo completely optionally to just show the links. Let's show it on desktop only */
+}
+
+@media screen and (min-width: 769px) {
+  .logo {
+    display: block;
+  }
+}
+
+.logo span {
+  color: var(--accent-color);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: var(--accent-color);
+  bottom: -4px;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.menu-icon {
+  display: none;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-primary);
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+@media screen and (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: -100vh;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    transition: all 0.5s ease;
+  }
+
+  .nav-menu.active {
+    top: 0;
+  }
+
+  .nav-link {
+    font-size: 1.5rem;
+  }
+
+  .menu-icon.open .bar1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .menu-icon.open .bar2 {
+    opacity: 0;
+  }
+
+  .menu-icon.open .bar3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+}

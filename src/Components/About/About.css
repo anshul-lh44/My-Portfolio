@@ -1,0 +1,108 @@
+.about-section {
+  background-color: var(--bg-color);
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.tracks-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-track {
+  position: absolute;
+  width: 10vw;
+  min-width: 70px;
+  max-width: 150px;
+  height: auto;
+  opacity: 0.02; 
+  /* Make the originally red tracks entirely white to be very faint */
+  filter: brightness(0) invert(1);
+}
+
+.container {
+  position: relative;
+  z-index: 5; /* Keep content above background */
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.about-text p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.about-image {
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  background-color: var(--accent-color);
+  transition: all 0.3s ease;
+}
+
+.image-wrapper img {
+  width: 100%;
+  border-radius: 12px;
+  filter: grayscale(100%) contrast(1);
+  mix-blend-mode: multiply;
+  transition: all 0.3s ease;
+  z-index: 10;
+  position: relative;
+  display: block;
+}
+
+.image-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--accent-color);
+  border-radius: 12px;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.image-wrapper:hover {
+  background-color: transparent;
+}
+
+.image-wrapper:hover img {
+  filter: none;
+  mix-blend-mode: normal;
+  transform: translate(-10px, -10px);
+}
+
+.image-wrapper:hover::after {
+  transform: translate(10px, 10px);
+}
+
+@media screen and (max-width: 900px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .about-image {
+    width: 70%;
+    margin: 3rem auto 0;
+  }
+}
