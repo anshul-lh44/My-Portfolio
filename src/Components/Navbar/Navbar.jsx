@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaHome, FaUser, FaCode, FaBriefcase, FaEnvelope, FaTimes, FaBars } from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -16,20 +17,21 @@ const Navbar = () => {
   useEffect(() => {
     if (menuOpen && window.innerWidth <= 768) {
       document.body.style.overflow = 'hidden';
-    } else if (window.innerWidth <= 768) {
+    } else {
       document.body.style.overflow = 'auto';
     }
   }, [menuOpen]);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '#home', icon: <FaHome /> },
+    { name: 'About', href: '#about', icon: <FaUser /> },
+    { name: 'Skills', href: '#skills', icon: <FaCode /> },
+    { name: 'Projects', href: '#projects', icon: <FaBriefcase /> },
+    { name: 'Contact', href: '#contact', icon: <FaEnvelope /> },
   ];
 
   const handleNavClick = (e, href) => {
+    e.preventDefault();
     setMenuOpen(false);
     document.body.style.overflow = 'auto';
     const targetElement = document.querySelector(href);
@@ -44,16 +46,18 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-container container">
+      <div className="navbar-container">
         <a href="#home" className="logo" onClick={(e) => handleNavClick(e, '#home')}>
           A<span>S</span>.
         </a>
 
-        <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu">
-          <div className="bar1"></div>
-          <div className="bar2"></div>
-          <div className="bar3"></div>
-        </div>
+        <button 
+          className={`menu-icon ${menuOpen ? 'open' : ''}`} 
+          onClick={() => setMenuOpen(!menuOpen)} 
+          aria-label="Toggle navigation menu"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
 
         <ul className={`nav-menu ${menuOpen ? 'active' : ''}`}>
           {navLinks.map((link, index) => (
@@ -63,7 +67,8 @@ const Navbar = () => {
                 className="nav-link"
                 onClick={(e) => handleNavClick(e, link.href)}
               >
-                {link.name}
+                <span className="nav-link-icon">{link.icon}</span>
+                <span className="nav-link-text">{link.name}</span>
               </a>
             </li>
           ))}
