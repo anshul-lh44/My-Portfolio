@@ -13,6 +13,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen && window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+    } else if (window.innerWidth <= 768) {
+      document.body.style.overflow = 'auto';
+    }
+  }, [menuOpen]);
+
   const navLinks = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
@@ -21,14 +29,27 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e, href) => {
+    setMenuOpen(false);
+    document.body.style.overflow = 'auto';
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      if (window.innerWidth <= 768) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        targetElement.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      }
+    }
+  };
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container container">
-        <a href="#home" className="logo">
+        <a href="#home" className="logo" onClick={(e) => handleNavClick(e, '#home')}>
           A<span>S</span>.
         </a>
 
-        <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)}>
+        <div className={`menu-icon ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation menu">
           <div className="bar1"></div>
           <div className="bar2"></div>
           <div className="bar3"></div>
@@ -40,7 +61,7 @@ const Navbar = () => {
               <a 
                 href={link.href} 
                 className="nav-link"
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
               >
                 {link.name}
               </a>

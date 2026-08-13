@@ -131,3 +131,31 @@
     transform: translateY(0);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .contact-section {
+    padding: 3rem 0;
+    min-height: auto;
+  }
+
+  .contact-desc {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .contact-form {
+    gap: 1.1rem;
+  }
+
+  .form-input,
+  .form-textarea {
+    padding: 0.85rem 1rem;
+    font-size: 1rem; /* Prevents auto-zoom on iOS */
+  }
+
+  .submit-btn {
+    min-height: 48px;
+    font-size: 0.95rem;
+  }
+}

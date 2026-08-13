@@ -38,3 +38,13 @@
   font-size: 0.8rem;
   opacity: 0.8;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 2rem 0 7rem 0;
+  }
+  
+  .footer-socials a {
+    font-size: 1.5rem;
+  }
+}

@@ -95,14 +95,38 @@
   transform: translate(10px, 10px);
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 768px) {
+  .about-section {
+    padding: 3rem 0;
+    min-height: auto;
+  }
+
   .about-content {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2rem;
+  }
+
+  .about-text p {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin-bottom: 1.2rem;
   }
   
   .about-image {
-    width: 70%;
-    margin: 3rem auto 0;
+    max-width: 230px;
+    margin: 1rem auto 0;
+  }
+
+  .image-wrapper::after {
+    top: 12px;
+    left: 12px;
+  }
+
+  .image-wrapper:hover img {
+    transform: translate(-5px, -5px);
+  }
+
+  .image-wrapper:hover::after {
+    transform: translate(5px, 5px);
   }
 }

@@ -10,9 +10,11 @@ const About = () => {
   useEffect(() => {
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const isMobile = width <= 768;
+    const trackCount = isMobile ? 12 : 48;
 
     // Initialize track physics properties
-    tracksRef.current = Array.from({ length: 48 }, (_, i) => ({
+    tracksRef.current = Array.from({ length: trackCount }, (_, i) => ({
       id: i + 1,
       x: Math.random() * (width + 200) - 100,
       y: Math.random() * (height + 200) - 100,
@@ -59,42 +61,37 @@ const About = () => {
         }
       }
 
-      // Check collisions
-      for (let i = 0; i < ts.length; i++) {
-        for (let j = i + 1; j < ts.length; j++) {
-          let t1 = ts[i];
-          let t2 = ts[j];
-          let dx = t2.x - t1.x;
-          let dy = t2.y - t1.y;
-          let dist = Math.sqrt(dx * dx + dy * dy);
-          let minDist = t1.radius + t2.radius;
+      // Check collisions on desktop
+      if (!isMobile) {
+        for (let i = 0; i < ts.length; i++) {
+          for (let j = i + 1; j < ts.length; j++) {
+            let t1 = ts[i];
+            let t2 = ts[j];
+            let dx = t2.x - t1.x;
+            let dy = t2.y - t1.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            let minDist = t1.radius + t2.radius;
 
-          if (dist < minDist && dist > 0) {
-            // Light collision response
-            let nx = dx / dist; // Normal x
-            let ny = dy / dist; // Normal y
+            if (dist < minDist && dist > 0) {
+              let nx = dx / dist;
+              let ny = dy / dist;
+              let dvx = t1.vx - t2.vx;
+              let dvy = t1.vy - t2.vy;
+              let relVel = dvx * nx + dvy * ny;
 
-            // Relative velocity
-            let dvx = t1.vx - t2.vx;
-            let dvy = t1.vy - t2.vy;
-            let relVel = dvx * nx + dvy * ny;
+              if (relVel > 0) {
+                let impulse = 1.0 * relVel / 2;
+                t1.vx -= impulse * nx;
+                t1.vy -= impulse * ny;
+                t2.vx += impulse * nx;
+                t2.vy += impulse * ny;
 
-            // Only resolve if moving towards each other
-            if (relVel > 0) {
-              // Swap velocity components along the normal (elastic, light mass)
-              let impulse = 1.0 * relVel / 2; // 1.0 is elasticity
-              
-              t1.vx -= impulse * nx;
-              t1.vy -= impulse * ny;
-              t2.vx += impulse * nx;
-              t2.vy += impulse * ny;
-
-              // Separate to avoid sticking
-              let overlap = minDist - dist;
-              t1.x -= (nx * overlap) / 2;
-              t1.y -= (ny * overlap) / 2;
-              t2.x += (nx * overlap) / 2;
-              t2.y += (ny * overlap) / 2;
+                let overlap = minDist - dist;
+                t1.x -= (nx * overlap) / 2;
+                t1.y -= (ny * overlap) / 2;
+                t2.x += (nx * overlap) / 2;
+                t2.y += (ny * overlap) / 2;
+              }
             }
           }
         }

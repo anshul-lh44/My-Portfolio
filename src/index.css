@@ -227,3 +227,44 @@ button {
   color: white;
   box-shadow: 0 4px 15px var(--accent-glow);
 }
+
+/* Mobile Responsiveness Rules */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .horizontal-container {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: auto;
+    width: 100%;
+    scroll-snap-type: none;
+  }
+
+  .horizontal-container::after {
+    display: none;
+  }
+
+  .horizontal-section {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    padding: 4rem 1rem 3rem 1rem;
+    box-sizing: border-box;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 6vw, 2.5rem);
+    margin-bottom: 2rem;
+  }
+}

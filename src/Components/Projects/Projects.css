@@ -92,3 +92,36 @@
   color: var(--accent-color);
   transform: scale(1.1);
 }
+
+@media screen and (max-width: 768px) {
+  .projects-section {
+    padding-top: 3rem;
+    min-height: auto;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+  }
+
+  .project-card {
+    padding: 1.4rem 1.2rem;
+  }
+
+  .project-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-tech-list {
+    gap: 0.5rem 0.8rem;
+    font-size: 0.78rem;
+  }
+}

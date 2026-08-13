@@ -33,6 +33,18 @@ const CursorVortex = () => {
       mouse.y = e.clientY - rect.top;
       mouse.isActive = true;
     };
+
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        const touch = e.touches[0];
+        lastClientX = touch.clientX;
+        lastClientY = touch.clientY;
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = touch.clientX - rect.left;
+        mouse.y = touch.clientY - rect.top;
+        mouse.isActive = true;
+      }
+    };
     
     const handleScroll = () => {
       if (mouse.isActive && lastClientX !== -1000) {
@@ -48,10 +60,14 @@ const CursorVortex = () => {
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('touchstart', handleTouchMove, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleMouseLeave, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     const particles = [];
-    const particleCount = 1000;
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 350 : 1000;
     // Colors from the image: dark greens, bright greens, purples, cyans
     const colors = ['#00ff88', '#8a2be2', '#4b0082', '#00ffff', '#0f52ba', '#1abc9c', '#9b59b6'];
 
@@ -77,7 +93,7 @@ const CursorVortex = () => {
           const dy = mouse.y - this.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           
-          if (dist < 600) { // Interaction radius
+          if (dist < (isMobile ? 350 : 600)) { // Interaction radius
             const angle = Math.atan2(dy, dx);
             const force = 1500 / (dist * dist + 500); 
             
@@ -142,12 +158,7 @@ const CursorVortex = () => {
     let animationFrameId;
 
     const render = () => {
-      // Force clear the entire canvas context every frame.
-      // This is a more aggressive clearing method that also resets canvas state
-      // ensuring that absolutely no previous pixels (trails) remain.
       ctx.clearRect(0, 0, width, height);
-      canvas.width = width; // HARD CLEAR
-
 
       if (mouse.isActive) {
         const gradient = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 120);
@@ -183,6 +194,9 @@ const CursorVortex = () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('touchstart', handleTouchMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleMouseLeave);
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameId);
     };

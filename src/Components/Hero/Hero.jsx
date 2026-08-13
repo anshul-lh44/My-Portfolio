@@ -4,6 +4,14 @@ import NetworkCanvas from './NetworkCanvas';
 import './Hero.css';
 
 const Hero = () => {
+  const handleScrollClick = (e, href) => {
+    e.preventDefault();
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="hero">
       <NetworkCanvas />
@@ -24,8 +32,8 @@ const Hero = () => {
             </p>
             
             <div className="hero-cta">
-              <a href="#projects" className="btn btn-primary">Check out my work</a>
-              <a href="#contact" className="btn btn-outline">Get in touch</a>
+              <a href="#projects" className="btn btn-primary" onClick={(e) => handleScrollClick(e, '#projects')}>Check out my work</a>
+              <a href="#contact" className="btn btn-outline" onClick={(e) => handleScrollClick(e, '#contact')}>Get in touch</a>
             </div>
 
             <div className="hero-socials">

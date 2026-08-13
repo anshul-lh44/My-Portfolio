@@ -30,7 +30,7 @@ const App = () => {
 
     useEffect(() => {
         const handleWheel = (e) => {
-            if (e.deltaY !== 0) {
+            if (window.innerWidth > 768 && e.deltaY !== 0) {
                 e.preventDefault();
                 containerRef.current.scrollLeft += e.deltaY * 3; // speed up scroll
             }
@@ -45,7 +45,7 @@ const App = () => {
     }, []);
 
 const SpeedLines = ({ warpEffect }) => {
-    if (!warpEffect) return null;
+    if (!warpEffect || (typeof window !== 'undefined' && window.innerWidth <= 768)) return null;
     const lines = Array.from({ length: 25 }); // enough lines to cover the entire page
     return (
         <div className={`speed-lines-container ${warpEffect}`}>
